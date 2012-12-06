@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_people do
   url 'http://redminecrm.com/projects/people'
   author_url 'mailto:kirbez@redminecrm.com'
 
-  requires_redmine :version_or_higher => '2.1.2'   
+  requires_redmine :version_or_higher => '2.1.2'
 
   settings :default => {
     :users_acl => {},
@@ -17,8 +17,8 @@ Redmine::Plugin.register :redmine_people do
 
   menu :top_menu, :people, {:controller => 'people', :action => 'index', :project_id => nil}, :caption => :label_people, :if => Proc.new {
     User.current.allowed_people_to?(:view_people)
-  }  
+  }
 
   menu :admin_menu, :people, {:controller => 'people_settings', :action => 'index'}, :caption => :label_people
-  
+
 end

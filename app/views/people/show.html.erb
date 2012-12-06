@@ -1,9 +1,9 @@
 <%= error_messages_for 'person' %>
 
-<% html_title "#{l(:label_people_person)} ##{@person.id}: #{@person.name}" %>
+<% html_title "#{l(:label_people_person)} ##{@person.id}: #{@person.nickname}" %>
 
 <div class="contextual">
-  <%= link_to l(:label_profile), user_path(@person), :class => 'icon icon-user' %>
+  <%= link_to l(:label_profile), user_path(@person.user), :class => 'icon icon-user' if @person.internal? %>
   <%= link_to l(:button_edit), {:controller => 'people', :action => 'edit', :id => @person}, :class => 'icon icon-edit' if User.current.allowed_people_to?(:edit_people, @person) %>
   <%= link_to_if_authorized l(:button_delete), {:controller => 'users', :action => 'destroy', :project_id => @project, :id => @person}, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %>
 </div>
@@ -14,7 +14,7 @@
     <tr>
       <td class="avatar"><%= link_to avatar(@person, :size => "64", :full_size => true), @person.avatar %></td>
       <td class="name" style="vertical-align: top;">
-        <h1><%= h @person.name %></h1>
+        <h1><%= h @person.nickname %></h1>
         <p>
         <%= h @person.job_title %>
         </p>
@@ -22,8 +22,8 @@
       </td>
       <td class="subject_info">
         <ul>
-          <% if @person.phones.any? %>
-            <li class="phone icon icon-phone"><%=  @person.phones.first %></li>
+          <% if @person.mobile_phones.any? %>
+            <li class="phone icon icon-phone"><%= @person.mobile_phones.first %></li>
           <% end %>
           <li class="email icon icon-email"><%= mail_to @person.email %></li>
         </ul>
@@ -39,9 +39,9 @@
 <% person_tabs = [{:name => 'activity', :partial => 'activity', :label => :label_activity},
         {:name => 'files', :partial => 'attachments', :label => :label_attachment_plural},
         {:name => 'projects', :partial => 'projects', :label => :label_project_plural}
-        ]   %>
+        ] if @person.internal? %>
 
-<%= render_tabs person_tabs %>
+<%= render_tabs (person_tabs || []) %>
 
 
 <% content_for :sidebar do %>

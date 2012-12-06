@@ -13,7 +13,6 @@ class PeopleController < ApplicationController
   	@people = find_people
     @groups = Group.all.sort
     @next_birthdays = Person.next_birthdays
-    @new_people = Person.where("appearance_date IS NOT NULL").order("appearance_date desc").first(5)
 
     respond_to do |format|
       format.html {render :partial => 'list_excerpt', :layout => false if request.xhr?}
@@ -22,13 +21,13 @@ class PeopleController < ApplicationController
 
   def show
     # @person.roles = Role.new(:permissions => [:download_attachments])
-    events = Redmine::Activity::Fetcher.new(User.current, :author => @person).events(nil, nil, :limit => 10)
+    events = Redmine::Activity::Fetcher.new(User.current, :author => @person.user).events(nil, nil, :limit => 10)
     @events_by_day = events.group_by(&:event_date)
     @person_attachments = @person.attachments.select{|a| a != @person.avatar}
     @memberships = @person.memberships.all(:conditions => Project.visible_condition(User.current))
     respond_to do |format|
       format.html
-      format.vcf { send_data(person_to_vcard(@person), :filename => "#{@person.name}.vcf", :type => 'text/x-vcard;', :disposition => 'attachment') }
+      format.vcf { send_data(person_to_vcard(@person), :filename => "#{@person.nickname}.vcf", :type => 'text/x-vcard;', :disposition => 'attachment') }
     end
   end
 
@@ -38,13 +37,15 @@ class PeopleController < ApplicationController
   end
 
   def new
-    @person = Person.new(:language => Setting.default_language, :mail_notification => Setting.default_notification_option)
+    @person = Person.new
     @auth_sources = AuthSource.find(:all)
   end
 
   def update
     (render_403; return false) unless @person.editable_by?(User.current)
     if @person.update_attributes(params[:person])
+      @person.user_id = params[:person][:user_id] if params[:person]
+      @person.save!
       flash[:notice] = l(:notice_successful_update)
       attach_avatar
       attachments = Attachment.attach_files(@person, params[:attachments])
@@ -62,23 +63,15 @@ class PeopleController < ApplicationController
   end
 
   def create
-    @person  = Person.new(:language => Setting.default_language, :mail_notification => Setting.default_notification_option)
+    @person  = Person.new
     @person.safe_attributes = params[:person]
-    @person.admin = false
-    @person.login = params[:person][:login]
-    @person.password, @person.password_confirmation = params[:person][:password], params[:person][:password_confirmation] unless @person.auth_source_id
-    @person.type = 'User'
+    @person.user_id = params[:person][:user_id] if params[:person]
     if @person.save
-      @person.pref.attributes = params[:pref]
-      @person.pref[:no_self_notified] = (params[:no_self_notified] == '1')
-      @person.pref.save
-      @person.notified_project_ids = (@person.mail_notification == 'selected' ? params[:notified_project_ids] : [])
       attach_avatar
-      Mailer.account_information(@person, params[:person][:password]).deliver if params[:send_information]
 
       respond_to do |format|
         format.html {
-          flash[:notice] = l(:notice_successful_create, :id => view_context.link_to(@person.login, person_path(@person)))
+          flash[:notice] = l(:notice_successful_create, :id => view_context.link_to(@person.nickname, person_path(@person)))
           redirect_to(params[:continue] ?
             {:controller => 'people', :action => 'new'} :
             {:controller => 'people', :action => 'show', :id => @person}
@@ -87,10 +80,6 @@ class PeopleController < ApplicationController
         format.api  { render :action => 'show', :status => :created, :location => person_url(@person) }
       end
     else
-      @auth_sources = AuthSource.find(:all)
-      # Clear password input
-      @person.password = @person.password_confirmation = nil
-
       respond_to do |format|
         format.html { render :action => 'new' }
         format.api  { render_validation_errors(@person) }
@@ -198,9 +187,8 @@ private
     # scope = scope.scoped(:conditions => ["#{Person.table_name}.status_id = ?", params[:status_id]]) if (!params[:status_id].blank? && params[:status_id] != "o" && params[:status_id] != "d")
     @status = params[:status] || 1
     scope = Person.logged.status(@status)
-    scope = scope.seach_by_name(params[:name]) if params[:name].present?
+    scope = scope.search_by_name(params[:name]) if params[:name].present?
     scope = scope.in_group(params[:group_id]) if params[:group_id].present?
-    scope = scope.where(:type => 'User')
 
     @people_count = scope.count
     @group = Group.find(params[:group_id]) if params[:group_id].present?
@@ -212,7 +200,7 @@ private
       scope = scope.scoped :limit  => @limit, :offset => @offset
       @people = scope
 
-      fake_name = @people.first.name if @people.length > 0 #without this patch paging does not work
+      fake_name = @people.first.nickname if @people.length > 0 #without this patch paging does not work
     end
 
     scope

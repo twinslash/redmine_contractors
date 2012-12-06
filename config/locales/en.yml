@@ -18,11 +18,12 @@ en:
 
   field_people_avatar: Avatar
   field_people_job_title: Job title
-  field_people_phone: Phone
+  field_people_mobile_phone: Mobile Phone
+  field_people_landline_phone: Landline Phone
   field_people_phone_plural: Phones
   field_people_skype: Skype
   field_people_twitter: Twitter
-  field_people_facebook: Facebook 
+  field_people_facebook: Facebook
   field_people_linkedin: LinkedIn
   field_people_middlename: Middle name
   field_people_background: Background info
@@ -31,6 +32,10 @@ en:
   field_people_birthday: Birthday
   field_people_appearance_date: Appearance date
   field_people_age: Age
+  field_people_email: E-mail
+  text_contact_type_internal: 'Internal'
+  text_contact_type_external: 'External'
+  field_people_contact_type: 'Contact type'
 
   people_permission_edit_people: Edit people
   people_permission_view_people: View people

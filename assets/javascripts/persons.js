@@ -1,4 +1,34 @@
 // Observ field function
+$(document).ready(function() {
+
+  var internal_field = $('.internal_fields');
+  var external_field = $('.external_fields');
+
+  if ($('[id^="person_contact_type"][checked="checked"]').val() == 'internal') {
+    internal_field.show();
+    external_field.hide();
+  } else {
+    internal_field.hide();
+    external_field.show();
+  }
+
+  $('#person_contact_type_internal').click(function() {
+    $('.internal_fields').show('slow');
+    $('.external_fields').hide('slow');
+    $('.external_fields').find('select, input').attr('disabled', 'disabled');
+    $('.internal_fields').find('select, input').removeAttr('disabled');
+  });
+
+  $('#person_contact_type_external').click(function() {
+    $('.internal_fields').hide('slow');
+    $('.external_fields').show('slow');
+    $('.internal_fields').find('select, input').attr('disabled', 'disabled');
+    $('.external_fields').find('select, input').removeAttr('disabled');
+  });
+
+});
+
+
 
 (function( $ ){
 

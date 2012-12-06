@@ -1,53 +1,72 @@
-class Person < User
+class Person < ActiveRecord::Base
   unloadable
   self.inheritance_column = :_type_disabled
 
   include Redmine::SafeAttributes
 
+  STATUS_ANONYMOUS = 0
   GENDERS = [[l(:label_people_male), 0], [l(:label_people_female), 1]]
+  CONTACT_TYPES = %W[internal external]
+  SEARCH_ATTRS = %w[first_name last_name middle_name nickname email]
 
-  scope :seach_by_name, lambda {|search| {:conditions =>   ["(LOWER(#{Person.table_name}.firstname) LIKE ? OR 
-                                                                    LOWER(#{Person.table_name}.lastname) LIKE ? OR 
-                                                                    LOWER(#{Person.table_name}.middlename) LIKE ? OR 
-                                                                    LOWER(#{Person.table_name}.login) LIKE ? OR 
-                                                                    LOWER(#{Person.table_name}.mail) LIKE ?)", 
-                                                                  search.downcase + "%",
-                                                                  search.downcase + "%",
-                                                                  search.downcase + "%",
-                                                                  search.downcase + "%",
-                                                                  search.downcase + "%"] }}
+  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
+  scope :status, lambda {|arg| joins { user }.where { user.status == arg } }
 
-  validates_uniqueness_of :firstname, :scope => [:lastname, :middlename]
+  scope :search_by_name, lambda {|search| where { SEARCH_ATTRS.map { |attr| (__send__(attr) =~ "%#{search}%") }.inject(&:|)} }
 
-  safe_attributes 'phone', 
-                  'address',
-                  'skype',
-                  'birthday',
-                  'job_title',
+  belongs_to :user
+  has_many :memberships, :through => :user
+
+  validates_presence_of :nickname
+  validates_presence_of :email, :if => Proc.new { |person| person.external? }
+  validates_uniqueness_of :email, :if => Proc.new { |person| !person.email.blank? }, :case_sensitive => false
+  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true
+
+  safe_attributes 'first_name',
+                  'middle_name',
+                  'last_name',
+                  'email',
                   'company',
-                  'middlename',
+                  'job_title',
+                  'avatar',
+                  'nickname',
                   'gender',
-                  'twitter',
+                  'birthday',
+                  'address',
+                  'mobile_phone',
+                  'landline_phone',
+                  'skype',
+                  'github',
                   'facebook',
+                  'twitter',
                   'linkedin',
+                  'foursquare',
                   'background',
-                  'appearance_date'
+                  'contact_type'
 
+  def mobile_phones
+    @mobile_phones || self.mobile_phone ? self.mobile_phone.split( /, */) : []
+  end
 
-  def phones                            
-    @phones || self.phone ? self.phone.split( /, */) : []
-  end  
+  def landline_phones
+    @landline_phones || self.landline_phone ? self.landline_phone.split( /, */) : []
+  end
 
-  def type
-    'User'
+  def internal?
+    self.contact_type == 'internal'
+  end
+
+  def external?
+    self.contact_type == 'external'
   end
 
   def email
-    self.mail
+    external? ? self.read_attribute(:email) : self.user.mail
   end
 
-  def project
-    nil
+  def self.available_users
+    ids = Person.pluck(:user_id).uniq
+    User.where { (id << ids) & (type == 'User') }
   end
 
   def next_birthday
@@ -60,7 +79,7 @@ class Person < User
   end
 
   def self.next_birthdays(limit = 10)
-    Person.where("users.birthday IS NOT NULL").sort_by(&:next_birthday).first(limit)
+    Person.where("people.birthday IS NOT NULL").sort_by(&:next_birthday).first(limit)
   end
 
   def age
@@ -70,8 +89,8 @@ class Person < User
   end
 
   def editable_by?(usr, prj=nil)
-    true    
-    # usr && (usr.allowed_to?(:edit_people, prj) || (self.author == usr && usr.allowed_to?(:edit_own_invoices, prj))) 
+    true
+    # usr && (usr.allowed_to?(:edit_people, prj) || (self.author == usr && usr.allowed_to?(:edit_own_invoices, prj)))
     # usr && usr.logged? && (usr.allowed_to?(:edit_notes, project) || (self.author == usr && usr.allowed_to?(:edit_own_notes, project)))
   end
 
@@ -82,5 +101,4 @@ class Person < User
   def attachments_visible?(user=User.current)
     true
   end
-      
 end

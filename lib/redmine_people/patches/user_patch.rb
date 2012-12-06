@@ -3,12 +3,12 @@ require_dependency 'principal'
 require_dependency 'user'
 
 module RedminePeople
-  module Patches    
+  module Patches
 
     module UserPatch
       def self.included(base) # :nodoc:
         base.send(:include, InstanceMethods)
-        
+
         base.class_eval do
           unloadable
           has_one :avatar, :class_name => "Attachment", :as  => :container, :conditions => "#{Attachment.table_name}.description = 'avatar'", :dependent => :destroy
@@ -31,9 +31,9 @@ module RedminePeople
           return true if permission == :view_people && self.is_a?(User) && !self.anonymous? && Setting.plugin_redmine_people["visibility"] == 'registered'
 
           (self.groups + [self]).map{|principal| PeopleAcl.allowed_to?(principal, permission) }.inject{|memo,allowed| memo || allowed }
-        end        
-        
-      end      
+        end
+
+      end
     end
 
   end
@@ -41,6 +41,7 @@ end
 
 unless User.included_modules.include?(RedminePeople::Patches::UserPatch)
   User.send(:include, RedminePeople::Patches::UserPatch)
+  Person.send(:include, RedminePeople::Patches::UserPatch)
 end
 
 

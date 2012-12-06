@@ -4,11 +4,11 @@
 
 
 
-<div class="filters">   
-	<%= form_tag({:contoller => "people", :action => "index"}, :method => :get,  :id => "query_form") do %> 
-		<%= hidden_field_tag('project_id', @project.to_param) if @project %>   
-		<% no_filters = true %>	
-    
+<div class="filters">
+	<%= form_tag({:contoller => "people", :action => "index"}, :method => :get,  :id => "query_form") do %>
+		<%= hidden_field_tag('project_id', @project.to_param) if @project %>
+		<% no_filters = true %>
+
     <script type="text/javascript">
        jQuery(function($) {
           // when the #search field changes
@@ -24,53 +24,53 @@
     </script>
 
     <h2 class="contacts_header">
-        <span id='scope_header' class="scope_title"> 
+        <span id='scope_header' class="scope_title">
         <%= @group ? @group.name : l(:label_people)  %>
         </span>
 
-        <span class="live_search">  
-            <%= text_field_tag(:name, params[:name], :autocomplete => "off", :class => "live_search_field", :placeholder => l(:label_people_search) ) %>    
+        <span class="live_search">
+            <%= text_field_tag(:name, params[:name], :autocomplete => "off", :class => "live_search_field", :placeholder => l(:label_people_search) ) %>
 
         </span>
 
-    </h2>		
-	
+    </h2>
+
 <!-- 	<fieldset id="filters" class="collapsible <%= 'collapsed' if no_filters %>">
 		<legend onclick="toggleFieldset(this);"><%= l(:label_filter_plural) %></legend>
-		<div style="<%= 'display: none;' if no_filters %>">  
-			<p>  
+		<div style="<%= 'display: none;' if no_filters %>">
+			<p>
 
-			</p>    
+			</p>
 
 		</div>
-	</fieldset> 
+	</fieldset>
 
 	<p class="buttons hide-when-print">
 		<%= link_to l(:button_apply), "#", :onclick=>"$('#query_form').submit()", :class => 'icon icon-checked' %>
     	<%= link_to l(:button_clear), { :set_filter => 1, :project_id => @project }, :class => 'icon icon-reload'  %>
-	</p>   
- -->                                                                   
-	<% end %>  
+	</p>
+ -->
+	<% end %>
 
 </div>
 
-<div id="people_list">  
+<div id="people_list">
 <% if @people.empty? %>
     <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
   	<%= render :partial => 'list_excerpt' %>
 <% end %>
-</div>  
+</div>
 
 <!-- <PRO> -->
 <% other_formats_links do |f| %>
-    <%= f.link_to 'CSV', :url => params %>    
+    <%= f.link_to 'CSV', :url => params %>
 <% end if false%>
 <!-- </PRO> -->
-                     
-<% html_title l(:label_people) %>                                                                     
 
-<%= context_menu url_for( {:controller => "people", :action => "context_menu"} )%>  
+<% html_title l(:label_people) %>
+
+<%= context_menu url_for( {:controller => "people", :action => "context_menu"} )%>
 
 <% content_for :sidebar do %>
 	<div id="people_groups">
@@ -82,7 +82,7 @@
 		<% @groups.each do |group| %>
 			<li>
 				<%= link_to group.name, {:group_id => group.id}, :class => "#{'selected' if @group && group == @group}"  %>
-			</li>	
+			</li>
 		<% end %>
 		</ul>
 	</div>
@@ -101,7 +101,7 @@
 
 <% content_for :header_tags do %>
     <%= javascript_include_tag :people, :plugin => 'redmine_people'  %>
-	<%= stylesheet_link_tag :people, :plugin => 'redmine_people' %> 
+	<%= stylesheet_link_tag :people, :plugin => 'redmine_people' %>
 	<meta name = "format-detection" content = "telephone=no">
 <% end %>
 
