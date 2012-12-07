@@ -11,7 +11,10 @@ class Person < ActiveRecord::Base
 
   scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
   scope :status, lambda {|arg| joins { user }.where { user.status == arg } }
-
+  scope :in_group, lambda {|group|
+    group_id = group.is_a?(Group) ? group.id : group.to_i
+    { :conditions => ["#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
+  }
   scope :search_by_name, lambda {|search| where { SEARCH_ATTRS.map { |attr| (__send__(attr) =~ "%#{search}%") }.inject(&:|)} }
 
   belongs_to :user
@@ -61,7 +64,7 @@ class Person < ActiveRecord::Base
   end
 
   def email
-    external? ? self.read_attribute(:email) : self.user.mail
+    external? ? self.read_attribute(:email) : self.user.try(:mail)
   end
 
   def self.available_users

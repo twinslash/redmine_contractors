@@ -6,7 +6,7 @@
         <% @people.each do |person| %>
             <tr class="hascontextmenu">
                 <td class="checkbox">
-                    <%= check_box_tag "ids[]", person.id, false, :onclick => "toggleIssuesSelection(this); return false;" %>
+                    <%= check_box_tag "ids[]", person.id, false %>
                 </td>
                 <td class="avatar">
                     <%= avatar(person, :size => "32", :height => 32, :width => 32) %>

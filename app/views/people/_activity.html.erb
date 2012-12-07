@@ -14,6 +14,6 @@
     <% end -%>
   </div>
   <%= link_to l(:label_activity) + " \xc2\xbb", :controller => 'activities',
-                :action => 'index', :id => nil, :user_id => @person,
-                :from => @events_by_day.keys.first %>
+                :action => 'index', :id => nil, :user_id => @person.user,
+                :from => @events_by_day.keys.first if @person.user %>
 <% end -%>

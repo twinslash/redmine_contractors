@@ -29,6 +29,7 @@ ru:
   field_people_linkedin: LinkedIn
   field_people_first_name: Имя
   field_people_last_name: Фамилия
+  field_people_nickname: Ник
   field_people_middle_name: Отчество
   field_people_background: Дополнительная информация
   field_people_address: Адрес
@@ -37,6 +38,7 @@ ru:
   field_people_appearance_date: Дата начала работы
   field_people_age: Возраст
   field_people_email: E-mail
+  field_people_github: Github
   text_contact_type_internal: 'Внутренний'
   text_contact_type_external: 'Внешний'
   field_people_contact_type: 'Тип сотрудника'

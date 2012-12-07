@@ -92,11 +92,6 @@
     <%= render :partial => 'person_birthday', :collection => @next_birthdays %>
   </div>
 
-  <div id="new_people">
-    <h3><%= l(:label_people_new_people) %></h3>
-    <%= render :partial => 'person_data', :collection => @new_people %>
-  </div>
-
 <% end %>
 
 <% content_for :header_tags do %>

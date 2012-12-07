@@ -1,6 +1,10 @@
 // Observ field function
 $(document).ready(function() {
 
+  $('.hascontextmenu').click(function() {
+    toggleIssuesSelection(this); return false;
+  });
+
   var internal_field = $('.internal_fields');
   var external_field = $('.external_fields');
 

@@ -33,6 +33,9 @@ en:
   field_people_appearance_date: Appearance date
   field_people_age: Age
   field_people_email: E-mail
+  field_people_nickname: Nickname
+  field_people_company: Company
+  field_people_github: Github
   text_contact_type_internal: 'Internal'
   text_contact_type_external: 'External'
   field_people_contact_type: 'Contact type'

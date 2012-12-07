@@ -173,12 +173,7 @@ private
   end
 
   def find_person
-    if params[:id] == 'current'
-      require_login || return
-      @person = User.current
-    else
-      @person = Person.find(params[:id])
-    end
+    @person = Person.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end
