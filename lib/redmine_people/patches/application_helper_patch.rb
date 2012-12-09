@@ -27,10 +27,10 @@ module RedminePeople
           if user.is_a?(User) && (avatar = user.avatar)
             avatar_url = url_for :only_path => false, :controller => "people", :action => "avatar", :id => avatar, :size => options[:size]
             image_tag(avatar_url, options.merge({:class => "gravatar"}))
-          elsif user.external? && user.is_a?(Person) && (avatar = user.avatar)
+          elsif user.is_a?(Person) && user.external? && (avatar = user.avatar)
             avatar_url = url_for :only_path => false, :controller => "people", :action => "avatar", :id => avatar, :size => options[:size]
             image_tag(avatar_url, options.merge({:class => "gravatar"}))
-          elsif user.internal? && user.user.is_a?(User) && (avatar = user.user.avatar)
+          elsif user.respond_to?(:user) && user.user.is_a?(User) && user.internal? && !user.user.avatar && (avatar = user.avatar)
             avatar_url = url_for :only_path => false, :controller => "people", :action => "avatar", :id => avatar, :size => options[:size]
             image_tag(avatar_url, options.merge({:class => "gravatar"}))
           elsif user.respond_to?(:facebook) &&  !user.facebook.blank?

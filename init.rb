@@ -1,12 +1,11 @@
 require 'redmine_people'
 
 Redmine::Plugin.register :redmine_people do
-  name 'Redmine People plugin'
-  author 'RedmineCRM'
-  description 'This is a plugin for managing Redmine users'
-  version '0.0.2'
-  url 'http://redminecrm.com/projects/people'
-  author_url 'mailto:kirbez@redminecrm.com'
+  name 'Redmine Contractors plugin'
+  author 'Twinslash'
+  description 'This is a plugin for managing contractors and their Redmine users'
+  version '0.0.1'
+  url 'https://github.com/twinslash/redmine_contractors.git'
 
   requires_redmine :version_or_higher => '2.1.2'
 

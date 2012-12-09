@@ -2,10 +2,12 @@
 
 	<% if @person.present? %>
 		<li><%= context_menu_link l(:button_edit), {:controller => 'people', :action => 'edit', :id => @person}, :class => 'icon-edit', :disabled => !@can[:edit] %></li>
+    <li><%= context_menu_link l(:button_delete), {:controller => 'people', :action => 'destroy', :id => @person}, :method => :delete, :data => {:confirm => @can[:delete] && l(:text_people_destroy_confirmation)}, :class => 'icon-del', :disabled => !@can[:delete] %></li>
 	<% else %>
     <!-- <li><%# context_menu_link l(:button_edit), {:controller => 'people', :action => 'bulk_edit', :ids => @persons.collect(&:id)},
             :class => 'icon-edit', :disabled => !@can[:edit] %></li> -->
-	<% end %>	
+    <li><%= context_menu_link l(:button_delete), {:controller => 'people', :action => 'bulk_destroy', :ids => @people.collect(&:id)}, :method => :delete, :data => {:confirm => @can[:delete] && l(:text_people_destroy_confirmation)}, :class => 'icon-del', :disabled => !@can[:delete] %></li>
+	<% end %>
 
 </ul>
 

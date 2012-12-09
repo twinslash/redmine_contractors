@@ -21,10 +21,14 @@ en:
   field_people_mobile_phone: Mobile Phone
   field_people_landline_phone: Landline Phone
   field_people_phone_plural: Phones
+  field_people_mobile_phone_plural: Mobile phones
+  field_people_landline_phone_plural: Landline phones
   field_people_skype: Skype
   field_people_twitter: Twitter
   field_people_facebook: Facebook
   field_people_linkedin: LinkedIn
+  field_people_first_name: First name
+  field_people_last_name: Last name
   field_people_middlename: Middle name
   field_people_background: Background info
   field_people_address: Address
@@ -36,9 +40,13 @@ en:
   field_people_nickname: Nickname
   field_people_company: Company
   field_people_github: Github
+  field_people_foursquare: 'Foursquare'
   text_contact_type_internal: 'Internal'
   text_contact_type_external: 'External'
   field_people_contact_type: 'Contact type'
+  field_default_role: 'Defaule role'
+
+  text_people_destroy_confirmation: 'Are you sure you want to delete the selected contractor(s)?'
 
   people_permission_edit_people: Edit people
   people_permission_view_people: View people

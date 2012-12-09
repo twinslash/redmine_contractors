@@ -12,7 +12,10 @@ module RedminePeople
         base.class_eval do
           unloadable
           has_one :avatar, :class_name => "Attachment", :as  => :container, :conditions => "#{Attachment.table_name}.description = 'avatar'", :dependent => :destroy
+          has_one :contractor, :class_name => "Person", :dependent => :destroy
           acts_as_attachable_global
+
+          after_create :create_profile
         end
       end
 
@@ -31,6 +34,10 @@ module RedminePeople
           return true if permission == :view_people && self.is_a?(User) && !self.anonymous? && Setting.plugin_redmine_people["visibility"] == 'registered'
 
           (self.groups + [self]).map{|principal| PeopleAcl.allowed_to?(principal, permission) }.inject{|memo,allowed| memo || allowed }
+        end
+
+        def create_profile
+          self.create_contractor!(:nickname => self.login, :contact_type => 'internal')
         end
 
       end

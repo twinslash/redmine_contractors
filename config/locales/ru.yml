@@ -39,9 +39,14 @@ ru:
   field_people_age: Возраст
   field_people_email: E-mail
   field_people_github: Github
+  field_people_foursquare: 'Foursquare'
   text_contact_type_internal: 'Внутренний'
   text_contact_type_external: 'Внешний'
   field_people_contact_type: 'Тип сотрудника'
+  field_default_role: 'Роль по умолчанию'
+  field_people_company: 'Компания'
+
+  text_people_destroy_confirmation: 'Вы уверены, что хотите удалить выбранных сотрудников?'
 
   people_permission_edit_people: Редактирования сотрудников
   people_permission_view_people: Просмотр сотрудников

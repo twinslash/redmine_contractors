@@ -9,8 +9,9 @@ class Person < ActiveRecord::Base
   CONTACT_TYPES = %W[internal external]
   SEARCH_ATTRS = %w[first_name last_name middle_name nickname email]
 
-  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
-  scope :status, lambda {|arg| joins { user }.where { user.status == arg } }
+  scope :logged, lambda { joins{ user.outer }.where { (user.status != STATUS_ANONYMOUS) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external')} }
+  scope :status, lambda {|arg| joins { user.outer }.where { (user.status == arg) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external') } }
+  scope :logged_with_status, lambda { |arg| joins{ user.outer }.where { ((user.status != STATUS_ANONYMOUS) & (user.status == arg)) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external')} }
   scope :in_group, lambda {|group|
     group_id = group.is_a?(Group) ? group.id : group.to_i
     { :conditions => ["#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
@@ -18,6 +19,7 @@ class Person < ActiveRecord::Base
   scope :search_by_name, lambda {|search| where { SEARCH_ATTRS.map { |attr| (__send__(attr) =~ "%#{search}%") }.inject(&:|)} }
 
   belongs_to :user
+  belongs_to :default_role, :class_name => 'Role'
   has_many :memberships, :through => :user
 
   validates_presence_of :nickname
@@ -45,7 +47,12 @@ class Person < ActiveRecord::Base
                   'linkedin',
                   'foursquare',
                   'background',
-                  'contact_type'
+                  'contact_type',
+                  'default_role_id'
+
+  def create_profile
+    true
+  end
 
   def mobile_phones
     @mobile_phones || self.mobile_phone ? self.mobile_phone.split( /, */) : []
@@ -70,6 +77,10 @@ class Person < ActiveRecord::Base
   def self.available_users
     ids = Person.pluck(:user_id).uniq
     User.where { (id << ids) & (type == 'User') }
+  end
+
+  def self.available_roles
+    Role.all
   end
 
   def next_birthday

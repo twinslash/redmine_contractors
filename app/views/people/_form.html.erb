@@ -19,7 +19,12 @@
 	</p>
 
 	<div class="internal_fields">
-		<p><%= f.select :user_id, Person.available_users.collect { |p| [p.name, p.id] } %></p>
+		<%
+			available_users = Person.available_users
+	    available_users << @person.user if @person.user
+	  %>
+		<p><%= f.select :user_id, available_users.collect { |p| [p.name, p.id] } %></p>
+		<p><%= f.select :default_role_id, Person.available_roles.collect { |r| [r.name, r.id] } %></p>
 	</div>
 
 	<div class="external_fields">
@@ -52,7 +57,7 @@
 	<p><%= f.text_field :facebook, :label => l(:field_people_facebook) + ' ID'-%></p>
  	<p><%= f.text_field :twitter, :label => l(:field_people_twitter) + ' ID' -%></p>
  	<p><%= f.text_field :linkedin, :label => l(:field_people_linkedin) + ' ID' -%></p>
- 	<p><%= f.text_field :foursquare, :label => l(:field_people_linkedin) + ' ID' -%></p>
+ 	<p><%= f.text_field :foursquare, :label => l(:field_people_foursquare) + ' ID' -%></p>
  	<p class  = "notes"><%= f.text_area :background , :cols => 80, :rows => 8, :class => 'wiki-edit', :label => l(:field_people_background)  %></p>
 	<%= wikitoolbar_for 'person_background' %>
 </div>

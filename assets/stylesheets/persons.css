@@ -98,30 +98,30 @@ table.people.index {
 	border-top: 1px solid rgb(239, 239, 239);
 	border-right: 1px solid rgb(239, 239, 239);
 	border-left: 1px solid rgb(239, 239, 239);
-	width: 100%; 
-	border-spacing: 0px 0px; 
-	margin-bottom: 4px; 
-}    
+	width: 100%;
+	border-spacing: 0px 0px;
+	margin-bottom: 4px;
+}
 
-table.people.index tr.selected{ background-color: #507AAA !important;	color: #F8F8F8 !important;} 
+table.people.index tr.selected{ background-color: #507AAA !important;	color: #F8F8F8 !important;}
 /*table.people.index tr.selected a { color: #F8F8F8 !important; } */
-table.people.index tr.context-menu-selection h2 { color: #F8F8F8 !important; } 
-table.people.index tr.context-menu-selection td { color: #F8F8F8 !important; } 
+table.people.index tr.context-menu-selection h2 { color: #F8F8F8 !important; }
+table.people.index tr.context-menu-selection td { color: #F8F8F8 !important; }
 table.people.index tr.context-menu-selection span.tag a { border: 1px solid #EFEFEF; padding: 2px 3px; }
 table.people.index tr.context-menu-selection span.deal-status { border: 1px solid #EFEFEF; padding: 2px 3px; }
 
-table.people.index tbody tr:hover { background-color:#ffffdd; } 
+table.people.index tbody tr:hover { background-color:#ffffdd; }
 
 table.people.index td {
   vertical-align: top;
   color: #666;
   font-size: 12px;
   padding: 8px 0;
-  border-bottom: 1px solid #efefef; 
+  border-bottom: 1px solid #efefef;
 }
 
 table.people.index td.checkbox { padding: 12px 0px 0px 5px; }
-table.people.index td.name { width: 50%; padding-right: 10px;} 
+table.people.index td.name { width: 50%; padding-right: 10px;}
 table.people.index td.info { width: 50%; padding-right: 5px; }
 table.people.index td.avatar {padding: 10px 10px 10px 5px;}
 
@@ -137,7 +137,7 @@ table.people.deals.index td.avatar {padding: 10px 10px 10px 10px;}
 table.people.index td.name h1 {	font-size: 20px; font-weight: normal;
 	margin: 0;
 	padding: 0;
-}         
+}
 
 table.people.index td.name h1.deal_name {
 	font-size: 16px;
@@ -172,6 +172,10 @@ div#people_groups ul {
 	padding-left: 0px;
 }
 
+div.internal_fields, div.external_fields {
+	padding: 20px 0;
+}
+
 /**************************************************************/
 /*                   ICONS
 /**************************************************************/
@@ -184,4 +188,4 @@ div#people_groups ul {
 .icon-linkedin {background-image: url(../images/linkedin.png);}
 
 
-   
+

@@ -5,7 +5,7 @@ class PeopleController < ApplicationController
 
   before_filter :find_person, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
   before_filter :authorize_people, :except => [:avatar, :context_menu]
-  before_filter :bulk_find_people, :only => [:context_menu]
+  before_filter :bulk_find_people, :only => [:context_menu, :bulk_destroy]
 
   include PeopleHelper
 
@@ -87,6 +87,28 @@ class PeopleController < ApplicationController
     end
   end
 
+  def destroy
+    @person.destroy
+
+    respond_to do |format|
+      format.html {
+        flash[:notice] = l(:notice_successful_delete, :id => view_context.link_to(@person.nickname, person_path(@person)))
+        redirect_to({:controller => 'people', :action => 'index'})
+      }
+    end
+  end
+
+  def bulk_destroy
+    @people.map(&:destroy)
+
+    respond_to do |format|
+      format.html {
+        flash[:notice] = l(:notice_successful_delete)
+        redirect_to({:controller => 'people', :action => 'index'})
+      }
+    end
+  end
+
   def avatar
     attachment = Attachment.find(params[:id])
     # debugger
@@ -126,7 +148,8 @@ class PeopleController < ApplicationController
 
   def context_menu
     @person = @people.first if (@people.size == 1)
-    @can = {:edit =>  @people.collect{|c| User.current.allowed_people_to?(:edit_people, @person)}.inject{|memo,d| memo && d}
+    @can = {:edit =>  @people.collect{|c| User.current.allowed_people_to?(:edit_people, @person)}.inject{|memo,d| memo && d},
+            :delete =>  @people.collect{|c| User.current.allowed_people_to?(:delete_people, @person)}.inject{|memo,d| memo && d}
             }
 
     # @back = back_url
@@ -140,7 +163,7 @@ private
         User.current.allowed_people_to?(:add_people, @person)
       when "update", "edit"
         User.current.allowed_people_to?(:edit_people, @person)
-      when "delete"
+      when "destroy", "bulk_destroy"
         User.current.allowed_people_to?(:delete_people, @person)
       when "index", "show"
         User.current.allowed_people_to?(:view_people, @person)
@@ -181,7 +204,7 @@ private
   def find_people(pages=true)
     # scope = scope.scoped(:conditions => ["#{Person.table_name}.status_id = ?", params[:status_id]]) if (!params[:status_id].blank? && params[:status_id] != "o" && params[:status_id] != "d")
     @status = params[:status] || 1
-    scope = Person.logged.status(@status)
+    scope = Person.logged_with_status(@status)
     scope = scope.search_by_name(params[:name]) if params[:name].present?
     scope = scope.in_group(params[:group_id]) if params[:group_id].present?
 
@@ -203,6 +226,7 @@ private
 
   def bulk_find_people
     @people = Person.find_all_by_id(params[:id] || params[:ids])
+
     raise ActiveRecord::RecordNotFound if @people.empty?
     if @people.detect {|person| !person.visible?}
       deny_access
