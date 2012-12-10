@@ -1,0 +1,16 @@
+---
+people_001:
+  id: 1
+
+people_002:
+  id: 2
+  contact_type: internal
+
+people_003:
+  id: 3
+  contact_type: external
+
+people_004:
+  id: 4
+  mobile_phone: "123, 234, 345"
+  landline_phone: "123, 234, 345"

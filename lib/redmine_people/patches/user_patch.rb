@@ -48,7 +48,6 @@ end
 
 unless User.included_modules.include?(RedminePeople::Patches::UserPatch)
   User.send(:include, RedminePeople::Patches::UserPatch)
-  Person.send(:include, RedminePeople::Patches::UserPatch)
 end
 
 

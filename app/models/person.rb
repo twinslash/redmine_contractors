@@ -3,14 +3,13 @@ class Person < ActiveRecord::Base
   self.inheritance_column = :_type_disabled
 
   include Redmine::SafeAttributes
+  acts_as_attachable_global
 
   STATUS_ANONYMOUS = 0
   GENDERS = [[l(:label_people_male), 0], [l(:label_people_female), 1]]
   CONTACT_TYPES = %W[internal external]
   SEARCH_ATTRS = %w[first_name last_name middle_name nickname email]
 
-  scope :logged, lambda { joins{ user.outer }.where { (user.status != STATUS_ANONYMOUS) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external')} }
-  scope :status, lambda {|arg| joins { user.outer }.where { (user.status == arg) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external') } }
   scope :logged_with_status, lambda { |arg| joins{ user.outer }.where { ((user.status != STATUS_ANONYMOUS) & (user.status == arg)) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external')} }
   scope :in_group, lambda {|group|
     group_id = group.is_a?(Group) ? group.id : group.to_i
@@ -21,6 +20,7 @@ class Person < ActiveRecord::Base
   belongs_to :user
   belongs_to :default_role, :class_name => 'Role'
   has_many :memberships, :through => :user
+  has_one :avatar, :class_name => "Attachment", :as  => :container, :conditions => "#{Attachment.table_name}.description = 'avatar'", :dependent => :destroy
 
   validates_presence_of :nickname
   validates_presence_of :email, :if => Proc.new { |person| person.external? }
@@ -50,9 +50,6 @@ class Person < ActiveRecord::Base
                   'contact_type',
                   'default_role_id'
 
-  def create_profile
-    true
-  end
 
   def mobile_phones
     @mobile_phones || self.mobile_phone ? self.mobile_phone.split( /, */) : []
