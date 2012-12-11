@@ -1,6 +1,6 @@
-require 'redmine_people'
+require 'redmine_contractors'
 
-Redmine::Plugin.register :redmine_people do
+Redmine::Plugin.register :redmine_contractors do
   name 'Redmine Contractors plugin'
   author 'Twinslash'
   description 'This is a plugin for managing contractors and their Redmine users'
