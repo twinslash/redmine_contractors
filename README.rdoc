@@ -1,3 +1,25 @@
-= redmine_people
+= Redmine contractors
 
-Description goes here
+This is a plugin for managing contractors and their Redmine users
+
+== Requirements
+
+* Redmine 2.1+
+* Ruby 1.8.7+
+
+== Installation
+
+Choose folder /plugins, make command:
+
+       git clone git://github.com/oleghaidul/redmine-people.git
+run:
+       bundle install
+       bundle exec rake redmine:plugins NAME=redmine_contractors RAILS_ENV=production
+
+Restart rails server.
+
+== Configuration
+
+To make plugin to work properly
+
+* Login as administrator. In top menu select "Administration". Choose menu "Contractors" and configure it.
