@@ -14,9 +14,9 @@ module RedminePeople
     [:edit_people, :view_people, :add_people, :delete_people]
   end
 
-  def self.settings() Setting[:plugin_redmine_people] end
+  def self.settings() Setting[:plugin_redmine_contractors] end
 
-  def self.users_acl() Setting.plugin_redmine_people[:users_acl] || {} end  
+  def self.users_acl() Setting.plugin_redmine_contractors[:users_acl] || {} end  
   
   def self.url_exists?(url)
     require_dependency 'open-uri'

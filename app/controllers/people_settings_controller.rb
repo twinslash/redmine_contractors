@@ -9,10 +9,10 @@ class PeopleSettingsController < ApplicationController
   end
 
   def update
-    settings = Setting.plugin_redmine_people
+    settings = Setting.plugin_redmine_contractors
     settings = {} if !settings.is_a?(Hash)
     settings.merge!(params[:settings])
-    Setting.plugin_redmine_people = settings
+    Setting.plugin_redmine_contractors = settings
     flash[:notice] = l(:notice_successful_update)
     redirect_to :action => 'index', :tab => params[:tab]
   end

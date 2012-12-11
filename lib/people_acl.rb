@@ -27,9 +27,9 @@ class PeopleAcl
   end
 
   def self.delete(principal_id)
-    users_acls = Setting.plugin_redmine_people[:users_acl] || {}
+    users_acls = Setting.plugin_redmine_contractors[:users_acl] || {}
     users_acls.delete(principal_id.to_s)
-    Setting.plugin_redmine_people = Setting.plugin_redmine_people.merge(:users_acl => users_acls)
+    Setting.plugin_redmine_contractors = Setting.plugin_redmine_contractors.merge(:users_acl => users_acls)
   end
 
   def self.create(principal_id, permissions)
@@ -64,15 +64,15 @@ class PeopleAcl
   end
 
   def save
-    users_acls = Setting.plugin_redmine_people[:users_acl]
+    users_acls = Setting.plugin_redmine_contractors[:users_acl]
     users_acls = {} unless users_acls && users_acls.is_a?(Hash)
     users_acls.merge!(self.principal_id.to_s => self.permissions)
-    Setting.plugin_redmine_people = Setting.plugin_redmine_people.merge(:users_acl => users_acls)
+    Setting.plugin_redmine_contractors = Setting.plugin_redmine_contractors.merge(:users_acl => users_acls)
   end
 
   private
 
   def self.acls
-    Setting.plugin_redmine_people[:users_acl]
+    Setting.plugin_redmine_contractors[:users_acl]
   end
 end

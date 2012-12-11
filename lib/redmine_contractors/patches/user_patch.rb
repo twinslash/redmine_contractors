@@ -30,8 +30,8 @@ module RedminePeople
           return true if admin?
           return true if person && person.is_a?(User) && person.id == self.id && [:view_people, :edit_people].include?(permission)
           return false unless RedminePeople.available_permissions.include?(permission)
-          return true if permission == :view_people && Setting.plugin_redmine_people["visibility"] == 'anonymous'
-          return true if permission == :view_people && self.is_a?(User) && !self.anonymous? && Setting.plugin_redmine_people["visibility"] == 'registered'
+          return true if permission == :view_people && Setting.plugin_redmine_contractors["visibility"] == 'anonymous'
+          return true if permission == :view_people && self.is_a?(User) && !self.anonymous? && Setting.plugin_redmine_contractors["visibility"] == 'registered'
 
           (self.groups + [self]).map{|principal| PeopleAcl.allowed_to?(principal, permission) }.inject{|memo,allowed| memo || allowed }
         end
