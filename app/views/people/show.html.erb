@@ -36,7 +36,7 @@
 
 
 
-<% person_tabs = [{:name => 'activity', :partial => 'activity', :label => :label_activity},
+<% person_tabs = [#{:name => 'activity', :partial => 'activity', :label => :label_activity},
         {:name => 'files', :partial => 'attachments', :label => :label_attachment_plural},
         {:name => 'projects', :partial => 'projects', :label => :label_project_plural}
         ] if @person.internal? %>
