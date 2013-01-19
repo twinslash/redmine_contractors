@@ -34,7 +34,7 @@
 		<p><%= f.text_field :email, :label => l(:field_people_email) %></p>
 	</div>
 
-	<p><%= f.text_field :company, :label => l(:field_people_company) %></p>
+	<p><%= f.select :company_id, Company.all.collect { |r| [r.name, r.id] }, :label => l(:field_people_company) %></p>
 	<p><%= f.text_field :job_title, :label => l(:field_people_job_title) %></p>
 	<p><%= label_tag l(:field_people_avatar) %> <%= file_field_tag 'person_avatar[file]', :size => 30, :id => nil  -%> </p>
 	<p><%= f.text_field :nickname, :label => l(:field_people_nickname) %></p>

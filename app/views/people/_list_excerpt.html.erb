@@ -1,43 +1,10 @@
 <%= form_tag({}) do -%>
-    <%= hidden_field_tag 'back_url', url_for(params) %>
-    <%= hidden_field_tag 'project_id', @project.id if @project %>
-        <table class="people index">
-        <tbody>
-        <% @people.each do |person| %>
-            <tr class="hascontextmenu">
-                <td class="checkbox">
-                    <%= check_box_tag "ids[]", person.id, false %>
-                </td>
-                <td class="avatar">
-                    <%= avatar(person, :size => "32", :height => 32, :width => 32) %>
-                </td>
-                <td class="name">
-                    <h1><%= link_to person.nickname, person_path(person) %></h1>
-                    <h2>
-                        <%= mail_to person.email %>
-                        <div><%= person.mobile_phones.first %></div>
-                        <div><%= person.landline_phones.first %></div>
-                    </h2>
-                </td>
-                <td class="info">
-                    <div class="title_and_company" >
-                        <%= h person.job_title %>
-                        <% if false && !person.is_company %>
-                            <%= " #{l(:label_at_company)} " unless (person.job_title.blank? or person.company.blank?) %>
-                            <%= h person.company %>
-                        <% end %>
-                    </div>
-                    <div class="tags">
-                        <%# render :partial => "tags_item", :collection => person.tags, :locals => {:is_note => false}  %>
-                    </div>
-                </td>
-            </tr>
-        <% end %>
-
-        </tbody>
-      </table>
-
+  <%= hidden_field_tag 'back_url', url_for(params) %>
+  <%= hidden_field_tag 'project_id', @project.id if @project %>
+  <%= render @companies %>
+  <h1>Other</h1>
+  <%= render @other_people %>
 <% end %>
-
+<div style="clear: both;"></div>
 <p class="pagination"><%= pagination_links_full @people_pages, @people_count %></p>
 

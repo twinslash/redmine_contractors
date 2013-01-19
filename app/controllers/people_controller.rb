@@ -10,7 +10,9 @@ class PeopleController < ApplicationController
   include PeopleHelper
 
   def index
+    @companies = Company.all
   	@people = find_people
+    @other_people = @people.where { company_id == nil }
     @groups = Group.all.sort
     @next_birthdays = Person.next_birthdays
 

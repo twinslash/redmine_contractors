@@ -19,6 +19,7 @@ en:
   field_people_avatar: Avatar
   field_people_job_title: Job title
   field_people_mobile_phone: Mobile Phone
+  field_people_phone: Phone
   field_people_landline_phone: Landline Phone
   field_people_phone_plural: Phones
   field_people_mobile_phone_plural: Mobile phones

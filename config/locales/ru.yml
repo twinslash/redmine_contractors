@@ -19,6 +19,7 @@ ru:
   field_people_avatar: Avatar
   field_people_job_title: Должность
   field_people_mobile_phone: Мобильный телефон
+  field_people_phone: Телефон
   field_people_landline_phone: Домашний телефон
   field_people_phone_plural: Телефоны
   field_people_mobile_phone_plural: Мобильные телефоны

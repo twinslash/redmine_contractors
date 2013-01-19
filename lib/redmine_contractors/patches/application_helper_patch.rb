@@ -7,8 +7,6 @@ module RedminePeople
         base.send(:include, InstanceMethods)
 
         base.class_eval do
-          unloadable
-
           alias_method_chain :link_to_user, :people
           alias_method_chain :avatar, :people
         end

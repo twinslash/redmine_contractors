@@ -5,6 +5,8 @@ class Person < ActiveRecord::Base
   include Redmine::SafeAttributes
   acts_as_attachable_global
 
+  belongs_to :company
+
   STATUS_ANONYMOUS = 0
   GENDERS = [[l(:label_people_male), 0], [l(:label_people_female), 1]]
   CONTACT_TYPES = %W[internal external]
