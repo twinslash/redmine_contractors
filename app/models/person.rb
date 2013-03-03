@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
 
   include Redmine::SafeAttributes
   acts_as_attachable_global
+  acts_as_taggable_on :hobbies, :skills, :foreign_languages
 
   belongs_to :company
 
@@ -11,6 +12,7 @@ class Person < ActiveRecord::Base
   GENDERS = [[l(:label_people_male), 0], [l(:label_people_female), 1]]
   CONTACT_TYPES = %W[internal external]
   SEARCH_ATTRS = %w[first_name last_name middle_name nickname email]
+  EDUCATION_VALUES = %w[higher incomplete_higher higher_student specialized_secondary seondary]
 
   scope :logged_with_status, lambda { |arg| joins{ user.outer }.where { ((user.status != STATUS_ANONYMOUS) & (user.status == arg)) | ((contact_type == 'internal') & (user_id == nil)) | (contact_type == 'external')} }
   scope :in_group, lambda {|group|
@@ -50,7 +52,10 @@ class Person < ActiveRecord::Base
                   'foursquare',
                   'background',
                   'contact_type',
-                  'default_role_id'
+                  'default_role_id',
+                  'skill_list',
+                  'foreign_language_list',
+                  'hobby_list'
 
 
   def mobile_phones
@@ -113,5 +118,13 @@ class Person < ActiveRecord::Base
 
   def attachments_visible?(user=User.current)
     true
+  end
+
+  def project
+    if self.respond_to?(:user) && user
+      user.project
+    else
+      Project.new
+    end
   end
 end

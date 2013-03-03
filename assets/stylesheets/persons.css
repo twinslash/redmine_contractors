@@ -192,8 +192,16 @@ div.internal_fields, div.external_fields {
   float: left;
   width: 43%;
   border: 1px solid gray;
-  padding: 15px;
-  margin: 0 0 20px 20px;
+  padding: 1%;
+  margin: 0 0 20px 3%;
+
+  /*float: left;
+  width: 45%;
+  padding: 3px;
+  border: solid 1px #D5D5D5;
+  margin: 0 0 1px 3%;
+  height: 134px;
+  overflow: hidden;*/
 }
 
 .half-width .avatar {

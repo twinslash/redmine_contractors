@@ -16,6 +16,9 @@
       <td class="name" style="vertical-align: top;">
         <h1><%= h @person.nickname %></h1>
         <p>
+          <%= textilizable @person, :background, :attachments => @person.attachments %>
+        </p>
+        <p>
         <%= h @person.job_title %>
         </p>
 

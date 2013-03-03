@@ -1,63 +1,87 @@
 <div class = "box tabular" id="person_data">
 
-	<p class="avatar" id="watchers">
-		<%= avatar(@person, :size => "64", :height => 64, :width => 64, :style => "vertical-align: middle;") %>
-		<%= link_to image_tag('delete.png'), {:controller => 'attachments', :action => 'destroy', :id => @person.avatar},
-	                                         :confirm => l(:text_are_you_sure),
-	                                         :method => :delete,
-	                                         :class => 'delete',
-											 :style => "vertical-align: middle;",
-	                                         :title => l(:button_delete) unless @person.avatar.blank? %>
-	</p>
+  <p class="avatar" id="watchers">
+    <%= avatar(@person, :size => "64", :height => 64, :width => 64, :style => "vertical-align: middle;") %>
+    <%= link_to image_tag('delete.png'), {:controller => 'attachments', :action => 'destroy', :id => @person.avatar},
+                                           :confirm => l(:text_are_you_sure),
+                                           :method => :delete,
+                                           :class => 'delete',
+                       :style => "vertical-align: middle;",
+                                           :title => l(:button_delete) unless @person.avatar.blank? %>
+  </p>
 
-	<p>
-		<%= label_tag l(:field_people_contact_type) %>
-		<% Person::CONTACT_TYPES.each do |contact_type_value| %>
-			<% checked = @person.persisted? ? contact_type_value == @person.contact_type : contact_type_value == 'internal' %>
-			<%= f.radio_button :contact_type, contact_type_value, :checked => checked %> <%= l("text_contact_type_#{contact_type_value}") %><br>
-		<% end %>
-	</p>
+  <h2><%= l(:system_information) %></h2>
+  <p>
+    <%= label_tag l(:field_people_contact_type) %>
+    <% Person::CONTACT_TYPES.each do |contact_type_value| %>
+      <% checked = @person.persisted? ? contact_type_value == @person.contact_type : contact_type_value == 'internal' %>
+      <%= f.radio_button :contact_type, contact_type_value, :checked => checked %> <%= l("text_contact_type_#{contact_type_value}") %><br>
+    <% end %>
+  </p>
 
-	<div class="internal_fields">
-		<%
-			available_users = Person.available_users
-	    available_users << @person.user if @person.user
-	  %>
-		<p><%= f.select :user_id, available_users.collect { |p| [p.name, p.id] } %></p>
-		<p><%= f.select :default_role_id, Person.available_roles.collect { |r| [r.name, r.id] } %></p>
-	</div>
+  <div class="internal_fields">
+    <%
+      available_users = Person.available_users
+      available_users << @person.user if @person.user
+    %>
+    <p><%= f.select :user_id, available_users.collect { |p| [p.name, p.id] } %></p>
+    <p><%= f.select :default_role_id, Person.available_roles.collect { |r| [r.name, r.id] } %></p>
+  </div>
 
-	<div class="external_fields">
-		<p><%= f.text_field :first_name, :label => l(:field_people_first_name) %></p>
-		<p><%= f.text_field :middle_name, :label => l(:field_people_middle_name) %></p>
-		<p><%= f.text_field :last_name, :label => l(:field_people_last_name) %></p>
-		<p><%= f.text_field :email, :label => l(:field_people_email) %></p>
-	</div>
+  <div class="external_fields">
+    <p><%= f.text_field :first_name, :label => l(:field_people_first_name) %></p>
+    <p><%= f.text_field :middle_name, :label => l(:field_people_middle_name) %></p>
+    <p><%= f.text_field :last_name, :label => l(:field_people_last_name) %></p>
 
-	<p><%= f.select :company_id, Company.all.collect { |r| [r.name, r.id] }, :label => l(:field_people_company) %></p>
-	<p><%= f.text_field :job_title, :label => l(:field_people_job_title) %></p>
-	<p><%= label_tag l(:field_people_avatar) %> <%= file_field_tag 'person_avatar[file]', :size => 30, :id => nil  -%> </p>
-	<p><%= f.text_field :nickname, :label => l(:field_people_nickname) %></p>
-	<p><%= f.select :gender, Person::GENDERS, :label => l(:field_people_gender)%></p>
-	<p><%= f.text_field :birthday, :size => 12, :label => l(:field_people_birthday) %><%= calendar_for('person_birthday') %> </p>
-	<p><%= f.text_area :address, :label=>l(:field_people_address), :rows => 5 -%></p>
-	<div id="phones_fields">
-		<p>
-			<%= f.text_field :mobile_phone, :label => l(:field_people_mobile_phone), :size => 80 -%>
-			<br>
-			<em><%= l(:text_comma_separated) %></em>
-			<br>
-			<%= f.text_field :landline_phone, :label => l(:field_people_landline_phone), :size => 80 -%>
-			<br>
-			<em><%= l(:text_comma_separated) %></em>
-		 </p>
-	</div>
-	<p><%= f.text_field :skype, :label => l(:field_people_skype) -%></p>
-	<p><%= f.text_field :github, :label => l(:field_people_github) %></p>
-	<p><%= f.text_field :facebook, :label => l(:field_people_facebook) + ' ID'-%></p>
- 	<p><%= f.text_field :twitter, :label => l(:field_people_twitter) + ' ID' -%></p>
- 	<p><%= f.text_field :linkedin, :label => l(:field_people_linkedin) + ' ID' -%></p>
- 	<p><%= f.text_field :foursquare, :label => l(:field_people_foursquare) + ' ID' -%></p>
- 	<p class  = "notes"><%= f.text_area :background , :cols => 80, :rows => 8, :class => 'wiki-edit', :label => l(:field_people_background)  %></p>
-	<%= wikitoolbar_for 'person_background' %>
-</div>
+  </div>
+
+  <h2><%= l(:global_information) %></h2>
+  <p><%= f.text_field :nickname, :label => l(:field_people_nickname) %></p>
+  <p><%= label_tag l(:field_people_avatar) %> <%= file_field_tag 'person_avatar[file]', :size => 30, :id => nil  -%> </p>
+  <p><%= f.select :gender, Person::GENDERS, :label => l(:field_people_gender)%></p>
+  <p><%= f.text_field :birthday, :size => 12, :label => l(:field_people_birthday) %><%= calendar_for('person_birthday') %> </p>
+  <p>
+    <br>
+      Попробуйте ответить на следующие вопросы:
+        <br>&nbsp;- обо мне в 3 словах
+        <br>&nbsp;- больше всего я в жизни люблю/ненавижу</li>
+        <br>&nbsp;- моя мечта</li>
+    <%= f.text_area :background, :rows => 20, :class => 'wiki-edit', :id => 'background_info', :label => l(:field_people_background) %>
+    <%= wikitoolbar_for 'background_info' %>
+  </p>
+
+  <p><%#= f.text_area :background, :label => l(:field_people_background) %></p>
+  <p><%= f.text_field :hobby_list, :label => l(:field_people_hobbies), "data-pre" => @person.hobbies.collect{ |t| {:id => t.name, :name => t.name } }.to_json %></p>
+
+  <h2><%= l(:contact_information) %></h2>
+  <p><%= f.text_field :mobile_phone, :label => l(:field_people_mobile_phone), :size => 80 -%></p>
+  <p><%= f.text_field :email, :label => l(:field_people_email) %></p>
+  <p><%= f.text_area :address, :label=>l(:field_people_address), :rows => 5 -%></p>
+  <p><%= f.text_field :skype, :label => l(:field_people_skype) -%></p>
+  <p><%= f.text_field :github, :label => l(:field_people_github) %></p>
+  <p><%= f.text_field :facebook, :label => l(:field_people_facebook) + ' ID'-%></p>
+  <p><%= f.text_field :twitter, :label => l(:field_people_twitter) + ' ID' -%></p>
+  <p><%= f.text_field :linkedin, :label => l(:field_people_linkedin) + ' ID' -%></p>
+  <p><%= f.text_field :foursquare, :label => l(:field_people_foursquare) + ' ID' -%></p>
+
+
+
+  <h2><%= l(:resume) %></h2>
+  <p><%= f.text_field :hire_date, :size => 12, :label => l(:field_people_hire_date) -%> <%= calendar_for('person_hire_date') %></p>
+  <div id="job-title-pre" data-pre='<%= @job_titles %>'></div>
+  <p><%= f.text_field :job_title, :label => l(:field_people_job_title) %></p>
+  <p><%= f.text_field :skill_list, :label => l(:field_people_skills), "data-pre" => @person.skills.collect{ |t| {:id => t.name, :name => t.name } }.to_json -%></p>
+  <p><%= f.text_field :foreign_language_list, :label => l(:field_people_foreign_languages), "data-pre" => @person.foreign_languages.collect{ |t| {:id => t.name, :name => t.name } }.to_json -%></p>
+  <p><%= f.select :education, Person::EDUCATION_VALUES.collect { |edu| l("people_education.#{edu}") }, :label => l(:field_people_education) %></p>
+  <p>
+    <%= f.text_area :education_info, :rows => 10, :class => 'wiki-edit', :id => 'education_info', :no_label => true %>
+    <%= wikitoolbar_for 'education_info' %>
+  </p>
+  <p>
+    <%= f.text_area :experience, :rows => 10, :class => 'wiki-edit', :id => 'experience', :label => l(:field_people_experience) %>
+    <%= wikitoolbar_for 'experience' %>
+  </p>
+  <p>
+    <%= f.text_area :strengths_and_weaknesses, :rows => 10, :class => 'wiki-edit', :id => 'strengths_and_weaknesses', :label => l(:field_people_strengths_and_weaknesses) %>
+    <%= wikitoolbar_for 'strengths_and_weaknesses' %>
+  </p>

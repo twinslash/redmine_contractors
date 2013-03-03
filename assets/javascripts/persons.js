@@ -26,6 +26,9 @@ $(document).ready(function() {
     $('.external_fields').find('select, input').removeAttr('disabled');
   });
 
+  $('#person_job_title').autocomplete({
+    source: $('#job-title-pre').data('pre'),
+  })
 });
 
 

@@ -31,7 +31,7 @@ en:
   field_people_first_name: First name
   field_people_last_name: Last name
   field_people_middle_name: Middle name
-  field_people_background: Background info
+  field_people_background: About Me
   field_people_address: Address
   field_people_gender: Gender
   field_people_birthday: Birthday
@@ -46,6 +46,13 @@ en:
   text_contact_type_external: 'External'
   field_people_contact_type: 'Contact type'
   field_default_role: 'Defaule role'
+  field_people_hobbies: "Hobbies"
+  field_people_hire_date: 'Hire date'
+  field_people_skills: 'Skills'
+  field_people_foreign_languages: 'Foreign languages'
+  field_people_education: 'Education'
+  field_people_experience: 'Experience'
+  field_people_strengths_and_weaknesses: 'Strengths and Weaknesses'
 
   text_people_destroy_confirmation: 'Are you sure you want to delete the selected contractor(s)?'
 
@@ -62,3 +69,15 @@ en:
   label_people_visibility_resistered: For registered users
   label_people_visibility_selected: For selected users
   label_people_visibility_anonymous: For anonymous users
+
+  people_education:
+    higher: "Higher"
+    incomplete_higher: "Higher (not ended)"
+    higher_student: "Higher (student)"
+    specialized_secondary: "Specialized secondary"
+    seondary: "Secondary"
+
+  system_information: "System information"
+  global_information: "Global information"
+  contact_information: "Contact information"
+  resume: "Resume"

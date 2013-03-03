@@ -16,22 +16,22 @@
         <tr>
           <td class="skype icon icon-skype"><%= link_to truncate(person.skype, :length => 10), "skype:#{person.skype}?call" %></td>
         </tr>
-        <% end %>
-        <% unless person.twitter.blank? %>
-        <tr>
-          <td class="twitter icon icon-twitter"><%= link_to truncate(person.twitter, :length => 10), "http://twitter.com/" + person.twitter %></td>
-        </tr>
-        <% end %>
-        <% unless person.facebook.blank? %>
-        <tr>
-          <td class="facebook icon icon-facebook"><%= link_to truncate(person.facebook.gsub(/^.*facebook.com\//, ''), :length => 10), "http://facebook.com/#{person.facebook}" %></td>
-        </tr>
-        <% end %>
-        <% unless person.linkedin.blank? %>
-        <tr>
-          <td class="linkedin icon icon-linkedin"><%= link_to truncate(person.nickname, :length => 10), "http://www.linkedin.com/profile/view?id=#{person.linkedin}"%></td>
-        </tr>
-        <% end %>
+      <% end %>
+      <% unless person.twitter.blank? %>
+      <tr>
+        <td class="twitter icon icon-twitter"><%= link_to truncate(person.twitter, :length => 10), "http://twitter.com/" + person.twitter %></td>
+      </tr>
+      <% end %>
+      <% unless person.facebook.blank? %>
+      <tr>
+        <td class="facebook icon icon-facebook"><%= link_to truncate(person.facebook.gsub(/^.*facebook.com\//, ''), :length => 10), "http://facebook.com/#{person.facebook}" %></td>
+      </tr>
+      <% end %>
+      <% unless person.linkedin.blank? %>
+      <tr>
+        <td class="linkedin icon icon-linkedin"><%= link_to truncate(person.nickname, :length => 10), "http://www.linkedin.com/profile/view?id=#{person.linkedin}"%></td>
+      </tr>
+      <% end %>
     </table>
   </div>
 </div>

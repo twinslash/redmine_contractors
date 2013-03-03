@@ -1,7 +1,7 @@
 # English strings go here for Rails i18n
 ru:
   label_people: Сотрудники
-  label_people_edit_person: Editing person information
+  label_people_edit_person: Редактирование сотрудника
   label_people_new_person: Новый сотрудник
   label_people_group_plular: Группы
   label_people_search: Поиск по имени
@@ -32,7 +32,7 @@ ru:
   field_people_last_name: Фамилия
   field_people_nickname: Ник
   field_people_middle_name: Отчество
-  field_people_background: Дополнительная информация
+  field_people_background: Обо мне
   field_people_address: Адрес
   field_people_gender: Пол
   field_people_birthday: Дата рождения
@@ -46,6 +46,13 @@ ru:
   field_people_contact_type: 'Тип сотрудника'
   field_default_role: 'Роль по умолчанию'
   field_people_company: 'Компания'
+  field_people_hobbies: 'Хобби'
+  field_people_hire_date: 'Дата принятия'
+  field_people_skills: 'Навыки'
+  field_people_foreign_languages: 'Иностранные языки'
+  field_people_education: 'Образование'
+  field_people_experience: 'Опыт работы'
+  field_people_strengths_and_weaknesses: 'Сильные и слабые стороны'
 
   text_people_destroy_confirmation: 'Вы уверены, что хотите удалить выбранных сотрудников?'
 
@@ -62,3 +69,15 @@ ru:
   label_people_visibility_resistered: Для зарегистрированных пользователей
   label_people_visibility_selected: Для выбранных пользователей
   label_people_visibility_anonymous: Для анонимных пользователей
+
+  people_education:
+    higher: "Высшее"
+    incomplete_higher: "Высшее незаконченное"
+    higher_student: "Высшее (студент)"
+    specialized_secondary: "Среднее специальное"
+    seondary: "Среднее"
+
+  system_information: "Системная информация"
+  global_information: "Общая информация"
+  contact_information: "Контактная информация"
+  resume: "Резюме"

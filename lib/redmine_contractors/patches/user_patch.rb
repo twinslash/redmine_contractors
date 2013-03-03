@@ -37,7 +37,7 @@ module RedminePeople
         end
 
         def create_profile
-          self.create_contractor!(:nickname => self.login, :contact_type => 'internal')
+          self.create_contractor!(:nickname => self.login, :contact_type => 'internal', :default_role_id => 1)
         end
 
       end

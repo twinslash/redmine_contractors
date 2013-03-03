@@ -4,21 +4,38 @@ class PeopleController < ApplicationController
   Mime::Type.register "text/x-vcard", :vcf
 
   before_filter :find_person, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
-  before_filter :authorize_people, :except => [:avatar, :context_menu]
+  before_filter :authorize_people, :except => [:avatar, :context_menu, :skills, :foreign_languages, :hobbies]
   before_filter :bulk_find_people, :only => [:context_menu, :bulk_destroy]
+  before_filter :load_job_titles, only: [:new, :edit]
 
   include PeopleHelper
 
   def index
-    @companies = Company.all
   	@people = find_people
-    @other_people = @people.where { company_id == nil }
     @groups = Group.all.sort
     @next_birthdays = Person.next_birthdays
 
     respond_to do |format|
       format.html {render :partial => 'list_excerpt', :layout => false if request.xhr?}
     end
+  end
+
+  def skills
+    q = params[:q]
+    @tags = Person.skill_counts.where { tags.name =~ "%#{q}%" }
+    respond_tags
+  end
+
+  def foreign_languages
+    q = params[:q]
+    @tags = Person.foreign_language_counts.where { tags.name =~ "%#{q}%" }
+    respond_tags
+  end
+
+  def hobbies
+    q = params[:q]
+    @tags = Person.hobby_counts.where { tags.name =~ "%#{q}%" }
+    respond_tags
   end
 
   def show
@@ -238,5 +255,13 @@ private
     render_404
   end
 
+  def respond_tags
+    respond_to do |format|
+      format.json { render json: @tags.collect{ |t| {:id => t.name, :name => t.name } } }
+    end
+  end
 
+  def load_job_titles
+    @job_titles = Person.pluck(:job_title).compact.uniq
+  end
 end

@@ -1,5 +1,5 @@
 <div class="contextual">
-    <%= link_to(l(:button_people_edit_profile), edit_user_path(@person), :class => 'icon icon-edit') if User.current.admin? %>
+    <%= link_to(l(:button_people_edit_profile), edit_user_path(@person.user), :class => 'icon icon-edit') if @person.user && User.current.admin? %>
 </div>
 
 <h2><%= l(:label_people_edit_person) %></h2>
@@ -17,7 +17,7 @@
 <% end %>
 
 <% content_for :header_tags do %>
-  <%= javascript_include_tag :persons, :plugin => 'redmine_contractors'  %>
-  <%= stylesheet_link_tag :persons, :plugin => 'redmine_contractors' %>
+  <%= javascript_include_tag :persons, 'jquery.tokeninput.js', 'person-token-input.js', :plugin => 'redmine_contractors'  %>
+  <%= stylesheet_link_tag :persons, 'token-input.css', 'token-input-facebook.css', :plugin => 'redmine_contractors' %>
   <%= robot_exclusion_tag %>
 <% end %>
