@@ -1,7 +1,9 @@
 <%= form_tag({}) do -%>
   <%= hidden_field_tag 'back_url', url_for(params) %>
   <%= hidden_field_tag 'project_id', @project.id if @project %>
-  <%= render @people %>
+  <div class="people">
+    <%= render @people %>
+  </div>
 <% end %>
 <div style="clear: both;"></div>
 <p class="pagination"><%= pagination_links_full @people_pages, @people_count %></p>

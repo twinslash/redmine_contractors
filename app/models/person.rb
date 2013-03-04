@@ -78,6 +78,14 @@ class Person < ActiveRecord::Base
     external? ? self.read_attribute(:email) : self.user.try(:mail)
   end
 
+  def first_name
+    external? ? self.read_attribute(:first_name) : self.user.try(:firstname)
+  end
+
+  def last_name
+    external? ? self.read_attribute(:last_name) : self.user.try(:lastname)
+  end
+
   def self.available_users
     ids = Person.pluck(:user_id).uniq
     User.where { (id << ids) & (type == 'User') }
