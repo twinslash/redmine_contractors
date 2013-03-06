@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $('#person_skill_list').tokenInput('/people/skills.json', {
-    crossDomain: false,
+    crossDomain: true,
     theme: 'facebook',
     preventDuplicates: true,
     prePopulate: $("#person_skill_list").data("pre"),
@@ -9,7 +9,7 @@ $(document).ready(function() {
   });
 
   $('#person_foreign_language_list').tokenInput('/people/foreign_languages.json', {
-    crossDomain: false,
+    crossDomain: true,
     theme: 'facebook',
     preventDuplicates: true,
     prePopulate: $("#person_foreign_language_list").data("pre"),
@@ -18,7 +18,7 @@ $(document).ready(function() {
   });
 
   $('#person_hobby_list').tokenInput('/people/hobbies.json', {
-    crossDomain: false,
+    crossDomain: true,
     theme: 'facebook',
     preventDuplicates: true,
     prePopulate: $("#person_hobby_list").data("pre"),
