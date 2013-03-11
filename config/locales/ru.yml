@@ -81,3 +81,9 @@ ru:
   global_information: "Общая информация"
   contact_information: "Контактная информация"
   resume: "Резюме"
+
+  age:
+    one: 1 год
+    few: "%{count} года"
+    many: "%{count} лет"
+    other: "%{count} лет"

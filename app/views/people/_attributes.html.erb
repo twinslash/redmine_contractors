@@ -1,80 +1,62 @@
 <div id="attributes">
-
-<h3><%= l(:label_people_person) %></h3>
-
-<table class="person attributes vcard">
+  <h3><%= l(:label_people_person) %></h3>
   <%= call_hook(:view_persons_sidebar_attributes_top) %>
   <% if @person.external? %>
-		<tr><th class = "first-name"><%= l(:field_name) %>:</th><td class="name fn "><%= @person.first_name %></td></tr>
-		<tr><th class = "middle-name"><%= l(:field_people_middle_name) %>:</th><td class="name mn "><%= @person.middle_name %></td></tr>
-		<tr><th class = "last-name"><%= l(:field_people_last_name) %>:</th><td class="name ln "><%= @person.last_name %></td></tr>
-		<tr class = "email">
-			<th><%= l(:field_people_email) %>:</th>
-			<td>
-				<%= mail_to @person.email  %>
-			</td>
-		</tr>
-	<% end %>
-	<% if !@person.job_title.blank? %>
-		<tr><th class = "job_title"><%= l(:field_people_job_title) %>:</th><td class="job_title title"><%= @person.job_title %></td></tr>
-	<% end %>
-	<tr>
-		<th class = "address"><%= l(:field_people_address) %>:</th>
-		<td class="address adr"><%= @person.address %>
-				<% if !@person.address.blank? %>
-					<br>
-					<%= link_to l(:label_people_show_on_map), "http://maps.google.com/maps?f=q&q=#{h @person.address.gsub("\r\n"," ").gsub("\n"," ")}+(#{h @person.nickname})&ie=UTF8&om=1"%>
-				<% end %>
-		</td>
-		</tr>
-	<tr class = "tel">
-		<th class = "phone"><%= l(:field_people_mobile_phone_plural) %>:</th>
-		<td class = "phones">
-		<% @person.mobile_phones.each do |phone| %>
-			<span  class="value"><%= h phone %> <br></span>
-		 <% end %>
-		</td>
-	</tr>
-	<tr class = "tel">
-		<th class = "phone"><%= l(:field_people_landline_phone_plural) %>:</th>
-		<td class = "phones">
-		 <% @person.landline_phones.each do |phone| %>
-			<span  class="value"><%= h phone %> <br></span>
-		 <% end %>
-		</td>
-	</tr>
- 	<% unless @person.skype.blank? %>
-	<tr>
-	  <th class = "skype"><%= l(:field_people_skype) %>:</th>
-	  <td class="skype icon icon-skype"><%= link_to @person.skype, "skype:#{@person.skype}?call" %></td>
-	</tr>
-	<% end %>
-  <% unless @person.twitter.blank? %>
-	<tr>
-	  <th class = "twitter"><%= l(:field_people_twitter) %>:</th>
-	  <td class="twitter icon icon-twitter"><%= link_to @person.twitter, "http://twitter.com/" + @person.twitter %></td>
-	</tr>
+    <h4><%= @person.first_name %> <%= @person.middle_name %> <%= @person.last_name %></h4>
+    <%= icon('envelope') %> <%= mail_to @person.email %>
   <% end %>
-  <% unless @person.facebook.blank? %>
-	<tr>
-	  <th class = "facebook"><%= l(:field_people_facebook) %>:</th>
-	  <td class="facebook icon icon-facebook"><%= link_to @person.facebook.gsub(/^.*facebook.com\//, ''), "http://facebook.com/#{@person.facebook}" %></td>
-	</tr>
+  <% if !@person.job_title.blank? %>
+    <%= l(:field_people_job_title) %>: <%= @person.job_title %>
   <% end %>
-  <% unless @person.linkedin.blank? %>
-	<tr>
-	  <th class = "linkedin"><%= l(:field_people_linkedin) %>:</th>
-	  <td class="linkedin icon icon-linkedin"><%= link_to @person.nickname, "http://www.linkedin.com/profile/view?id=#{@person.linkedin}"%></td>
-	</tr>
-  <% end %>
-
-	<% unless @person.birthday.blank? %>
-	<tr> <th class = "birthday"><%= l(:field_people_birthday) %>:</th><td class="birthday bday" title=<%= "#{format_date(@person.birthday)}" %>><%= "#{@person.birthday.day} #{t('date.month_names')[@person.birthday.month]}"%></td> </tr>
-	<tr> <th class = "age"><%= l(:field_people_age) %>:</th><td class="ega"><%= @person.age %></td> </tr>
-	<% end %>
-
-	<%= call_hook(:view_persons_sidebar_attributes_bottom) %>
-
-</table>
-
+  <ul>
+    <li>
+      <% unless @person.address.blank? %>
+        <%= icon('map-marker') %>
+        <%= link_to @person.address, "http://maps.google.com/maps?f=q&q=#{h @person.address.gsub("\r\n"," ").gsub("\n"," ")}+(#{h @person.nickname})&ie=UTF8&om=1"%>
+      <% end %>
+    </li>
+    <% @person.mobile_phones.each do |phone| %>
+      <li>
+        <%= icon('mobile-phone') %>
+        <%= h phone %>
+      </li>
+    <% end %>
+    <% @person.landline_phones.each do |phone| %>
+      <li>
+        <%= icon('phone') %>
+        <%= h phone %>
+      </li>
+    <% end %>
+    <% unless @person.skype.blank? %>
+      <li>
+        <%= icon('skype') %>
+        <%= link_to @person.skype, "skype:#{@person.skype}?call" %>
+      </li>
+    <% end %>
+    <% unless @person.twitter.blank? %>
+      <li>
+        <%= icon('twitter') %>
+        <%= link_to @person.twitter, "http://twitter.com/" + @person.twitter %>
+      </li>
+    <% end %>
+    <% unless @person.facebook.blank? %>
+      <li>
+        <%= icon('facebook') %>
+        <%= link_to @person.facebook.gsub(/^.*facebook.com\//, ''), "http://facebook.com/#{@person.facebook}" %>
+      </li>
+    <% end %>
+    <% unless @person.linkedin.blank? %>
+      <li>
+        <%= icon('linkedin') %>
+        <%= link_to @person.nickname, "http://www.linkedin.com/profile/view?id=#{@person.linkedin}"%>
+      </li>
+    <% end %>
+    <% unless @person.birthday.blank? %>
+      <li title=<%= "#{format_date(@person.birthday)}" %>>
+        <%= icon('gift') %>
+        <%= "#{@person.birthday.day} #{t('date.month_names')[@person.birthday.month]}"%> (<%= t :age, count: @person.age %>)
+      </li>
+    <% end %>
+  </ul>
+  <%= call_hook(:view_persons_sidebar_attributes_bottom) %>
 </div>

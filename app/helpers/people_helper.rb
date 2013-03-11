@@ -45,4 +45,7 @@ module PeopleHelper
 
   end
 
+  def icon(type)
+    "<i class=\"icon-#{type}\"></i> ".html_safe
+  end
 end

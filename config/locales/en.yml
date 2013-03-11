@@ -81,3 +81,7 @@ en:
   global_information: "Global information"
   contact_information: "Contact information"
   resume: "Resume"
+
+  age:
+    one: 1 year
+    other: "%{count} years"

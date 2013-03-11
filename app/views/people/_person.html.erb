@@ -1,6 +1,6 @@
 <div class="vcard">
   <div class="avatar">
-    <%= gravatar(person.email.to_s.downcase, :size => "150", :default => 'wavatar') unless person.email.blank? %>
+    <%= gravatar(person.email.to_s.downcase, :size => "100", :default => 'wavatar') unless person.email.blank? %>
     <!-- <%= avatar(person, :size => "200", :height => 200, :width => 200) %> -->
   </div>
   <div class="info">
@@ -10,37 +10,37 @@
   <ul class="contacts">
     <% unless person.mobile_phone.blank? %>
       <li>
-        <i class="icon-phone"></i>
+        <%= icon("phone") %>
         <%= truncate(person.mobile_phone, :length => 17) %>
       </li>
     <% end %>
     <% unless person.email.blank? %>
       <li>
-        <i class="icon-envelope"></i>
+        <%= icon("envelope") %>
         <%= mail_to truncate(person.email, :length => 30) %>
       </li>
     <% end %>
     <% unless person.skype.blank? %>
       <li>
-        <i class="icon-skype"></i>
+        <%= icon("skype") %>
         <%= link_to truncate(person.skype, :length => 30), "skype:#{person.skype}?call" %>
       </li>
     <% end %>
     <% unless person.twitter.blank? %>
       <li>
-        <i class="icon-twitter"></i>
+        <%= icon("twitter") %>
         <%= link_to truncate(person.twitter, :length => 30), "http://twitter.com/" + person.twitter %>
       </li>
     <% end %>
     <% unless person.facebook.blank? %>
       <li>
-        <i class="icon-facebook"></i>
+        <%= icon("facebook") %>
         <%= link_to truncate(person.facebook.gsub(/^.*facebook.com\//, ''), :length => 30), "http://facebook.com/#{person.facebook}" %>
       </li>
     <% end %>
     <% unless person.linkedin.blank? %>
       <li>
-        <i class="icon-linkedin"></i>
+        <%= icon("linkedin") %>
         <%= link_to truncate(person.nickname, :length => 30), "http://www.linkedin.com/profile/view?id=#{person.linkedin}"%>
       </li>
     <% end %>

@@ -60,6 +60,16 @@ div.person_details  table.subject_header td.subject_info li {
   white-space: nowrap;
 }
 
+/**************************************************************/
+/*                   SHOW_PERSON_SIDEBAR
+/**************************************************************/
+
+#attributes ul {
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+
 
 /**************************************************************/
 /*                   PERSON_DATA
@@ -92,55 +102,55 @@ table.person_data td.name h4 {
 /**************************************************************/
 
 
-.vcard, .vcard .avatar img {
+.people .vcard, .people .vcard .avatar img {
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
      -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.vcard {
+.people .vcard {
   background: #fff url(../images/logo.png) 24px 24px no-repeat;
   float: left;
-  min-width: 400px;
-  min-height: 200px;
+  min-width: 350px;
+  min-height: 180px;
   overflow: visible;
   margin: 15px 15px 60px ;
   padding: 30px;
   position: relative;
 }
 
-.vcard .avatar {
+.people .vcard .avatar {
   position: absolute;
-  bottom: -30px;
-  left: 30px;
+  bottom: -20px;
+  left: 20px;
   z-index: 1;
 }
 
-.vcard .info {
+.people .vcard .info {
   margin: 0 4px 0 70px
 }
 
-.vcard .info p {
+.people .vcard .info p {
   margin: 4px 0 0;
 }
 
-.vcard .info p.full_name {
+.people .vcard .info p.full_name {
   font-size: 26px;
   font-weight: bold;
   line-height: 26px;
 }
 
-.vcard .info p.full_name a {
+.people .vcard .info p.full_name a {
   color: #000;
 }
 
-.vcard .info p.title {
+.people .vcard .info p.title {
   color: #b7b7b7;
   font-size: 22px;
   line-height: 22px;
 }
 
-.vcard .contacts {
+.people .vcard .contacts {
   color: #000;
   font-size: 14px;
   float: right;
@@ -151,13 +161,18 @@ table.person_data td.name h4 {
   bottom: 40px;*/
 }
 
-.vcard .contacts li {
+.people .vcard .contacts li {
   list-style: none;
 }
 
-.vcard .contacts a {
+.people .vcard .contacts a {
   color: #000;
 }
+
+.people .vcard .contacts i {
+  color: #ee3c23;
+}
+
 
 
 /**************************************************************/
@@ -248,9 +263,4 @@ div#people_groups ul {
 
 div.internal_fields, div.external_fields {
   padding: 20px 0;
-}
-
-[class^="icon-"],
-[class*=" icon-"] {
-  color: #ee3c23;
 }
