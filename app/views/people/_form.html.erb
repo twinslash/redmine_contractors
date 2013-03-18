@@ -32,7 +32,7 @@
     <p><%= f.text_field :first_name, :label => l(:field_people_first_name) %></p>
     <p><%= f.text_field :middle_name, :label => l(:field_people_middle_name) %></p>
     <p><%= f.text_field :last_name, :label => l(:field_people_last_name) %></p>
-
+    <p><%= f.text_field :email, :label => l(:field_people_email) %></p>
   </div>
 
   <h2><%= l(:global_information) %></h2>
@@ -55,7 +55,6 @@
 
   <h2><%= l(:contact_information) %></h2>
   <p><%= f.text_field :mobile_phone, :label => l(:field_people_mobile_phone), :size => 80 -%></p>
-  <p><%= f.text_field :email, :label => l(:field_people_email) %></p>
   <p><%= f.text_area :address, :label=>l(:field_people_address), :rows => 5 -%></p>
   <p><%= f.text_field :skype, :label => l(:field_people_skype) -%></p>
   <p><%= f.text_field :github, :label => l(:field_people_github) %></p>
